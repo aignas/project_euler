@@ -19,15 +19,15 @@ def series_gen(n):
     """
     i = -1
     k = 1
-    m = 6*k + i
-    while n > m:
+    m = 6 * k + i
+    while n >= m:
         yield m
-        if i == 1:
-            k += 1
         i = -i
-        m = 6*k + i
+        if i == -1:
+            k += 1
+        m = 6 * k + i
 
-def S(n, mod=-1):
+def S(n, mod=None):
     """
     Number of terms in the sum are: n - 1
     Number of terms equal to 2 are: n//2
@@ -35,10 +35,14 @@ def S(n, mod=-1):
     Then we can use a table of primes.
     """
     primes = [5]
+    prime_thresh = n/2
 
     # Add to the sum all the even number primes
-    sum_ = n//2*2
-    sum_ += (n - n//2*2 - 1)//3*3
+    number_of_twos = n//2
+    number_of_threes = ((n - number_of_twos - 1)//3 + 1)
+    sum_ = 2 * number_of_twos + 3 * number_of_threes
+    if mod is not None:
+        sum_ %= mod
 
     # odd number smpfs numbers
     # Check the smpf in a list of primes!
@@ -50,14 +54,18 @@ def S(n, mod=-1):
                 break
 
             if k > sq:
-                primes.append(i)
+                # We do not need to store really big prime numbers
+                if i < prime_thresh:
+                    primes.append(i)
                 sum_ += i
                 break
+
+        if mod is not None and mod < sum_:
+            sum_ %= mod
 
     return sum_
 
 def test_solution():
-    print(list(series_gen(20)))
     result = S(100)
     assert result == 1257, "Got %d" % result
     result = S(101)
@@ -68,7 +76,7 @@ def solution():
     Solution to the problem.
     """
     test_solution()
-    return S(100)
+    return S(10**12, 10**9)
 
 
 def main():

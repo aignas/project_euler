@@ -6,7 +6,7 @@ The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
 Find the sum of all the primes below two million.
 
-Solves in 6.458s.
+Solves in 6.458s and in 0.580s with PyPy.
 """
 
 
@@ -22,8 +22,8 @@ def main():
     k = 1
     n = -1
     number = 6 * k + n
-    primes = [3]
-    sum_ = 2 + sum(primes)
+    primes = []
+    sum_ = 2 + 3 + sum(primes)
     while number < thresh:
         is_prime = True
         sq = number**0.5
