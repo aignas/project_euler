@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-O3 -fopenmp -std=c++11 -Wall -Werror
+CFLAGS=-O3 -fopenmp -std=c++11 -Wall
 INCLUDES=-I$(HOME)/src/test_frameworks/c++/Catch/single_include
 PROBLEM=521.cxx
 

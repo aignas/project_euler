@@ -44,17 +44,23 @@ def S(n, mod=None):
     if mod is not None:
         sum_ %= mod
 
+    smpf = []
+
     # odd number smpfs numbers
     # Check the smpf in a list of primes!
     for i in series_gen(n):
         sq = i**0.5
         for k in primes:
             if i % k == 0:
+                print(k)
+                smpf.append(k)
                 sum_ += k
                 break
 
             if k > sq:
                 # We do not need to store really big prime numbers
+                print(i)
+                smpf.append(i)
                 if i < prime_thresh:
                     primes.append(i)
                 sum_ += i
@@ -62,6 +68,8 @@ def S(n, mod=None):
 
         if mod is not None and mod < sum_:
             sum_ %= mod
+
+    print(sorted(smpf))
 
     return sum_
 
@@ -75,9 +83,8 @@ def solution():
     """
     Solution to the problem.
     """
-    test_solution()
-    return S(10**12, 10**9)
-
+    #test_solution()
+    return S(100, None)
 
 def main():
     """ The main function
