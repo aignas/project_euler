@@ -1,0 +1,2 @@
+-std=c++11
+-I../../../test_frameworks/c++/Catch/single_include
