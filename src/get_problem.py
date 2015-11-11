@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import click
@@ -15,7 +15,7 @@ def get_euler_problem(problem):
     url = url_template.format(
         problem_number=problem)
 
-    request = requests.get(url)
+    request = requests.get(url, verify=False)
 
     data = request.text
 
