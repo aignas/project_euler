@@ -1,19 +1,25 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+
+"""Get the description of the problem
+"""
 
 import click
 
 from bs4 import BeautifulSoup
 import requests
+import html2text
+
+import os
+
 
 @click.command()
-@click.argument('problem')
-def get_euler_problem(problem):
+@click.argument('number')
+def get_euler_problem(number):
     """Scrape data from the project euler project.
     """
     url_template = "https://projecteuler.net/problem={problem_number}"
     url = url_template.format(
-        problem_number=problem)
+        problem_number=number)
 
     request = requests.get(url, verify=False)
 
@@ -23,7 +29,7 @@ def get_euler_problem(problem):
     content = soup.find("div", {"id": "content"})
     title = content.find("h2")
     problem_number = content.find("h3")
-    problem = content.find("div", {"class": "problem_content"})
+    problem = content.find("div", {"class": "problem_content"}).text
 
     from textwrap import TextWrapper
 
@@ -32,7 +38,7 @@ def get_euler_problem(problem):
         initial_indent='    ',
         subsequent_indent='    ',)
 
-    paragraphs = [i.string for i in problem.find_all('p')]
+    paragraphs = problem.split('\n')
 
     try:
         problem_description = '\n\n'.join(
@@ -54,9 +60,11 @@ def get_euler_problem(problem):
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 """
 {description}
 """
+
 
 def benchmark(func, *args, **kwargs):
     """A simple benchmark to check execution time of the code
@@ -88,7 +96,15 @@ if __name__ == "__main__":
     main()
 '''.format(description=description)
 
-    print(problem_template)
+    filename = "solution{:03d}.py".format(int(number))
+
+    if not os.path.exists(filename):
+        print("Writing the {}".format(filename))
+        print(problem_template)
+        with open(filename, 'w') as file_:
+            file_.write(problem_template)
+    else:
+        print("{} already exists!".format(filename))
 
 
 if __name__ == "__main__":
