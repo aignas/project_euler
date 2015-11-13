@@ -224,6 +224,7 @@ def main():
     start = time()
     answer = solution()
     print("Answer is: {}".format(answer))
+    print("Answer is: {}".format(str(answer)[:10]))
     print("Solved in {:.3f}s".format(time() - start))
 
 if __name__ == "__main__":

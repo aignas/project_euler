@@ -56,8 +56,7 @@ def get_euler_problem(number):
             problem_number=problem_number.string,
             problem_description=problem_description))
 
-    problem_template = '''
-#!/usr/bin/env python
+    problem_template = '''#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 
@@ -81,13 +80,14 @@ def benchmark(func, *args, **kwargs):
 def solution():
     """The solution to the problem
     """
-    pass
+    ret = 0
+    print(ret)
 
 
 def main():
     """The main function
     """
-    # benchmark(solution)
+    benchmark(solution)
 
 
 if __name__ == "__main__":

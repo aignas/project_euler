@@ -1,55 +1,77 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
-Find the sum of all the primes below two million.
-
-Solves in 6.458s and in 0.580s with PyPy.
 """
+    Project Euler solution
+
+    Problem 10: Summation of primes
+
+
+
+    The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+    Find the sum of all the primes below two million.
+
+
+"""
+
+
+def benchmark(func, *args, **kwargs):
+    """A simple benchmark to check execution time of the code
+    """
+    from timeit import default_timer as timer
+
+    start = timer()
+    answer = func(*args, **kwargs)
+    end = timer()
+    print("Completed in: {}".format(end - start))
+    return answer
+
+
+def possible_primes():
+    """ 6k+-1
+    """
+    n = 5
+    while True:
+        yield n
+        n += 2
+        yield n
+        n += 4
+
+
+def solution():
+    """The solution to the problem
+    """
+    primes = [2, 3]
+    sum_ = 5
+
+    for pp in possible_primes():
+        limit = pp**0.5
+
+        for p in primes:
+            if p > limit:
+                primes.append(pp)
+                sum_ += pp
+                break
+
+            if pp % p == 0:
+                break
+
+        if primes[-1] > 2000000:
+            break
+
+    return sum_
 
 
 def main():
-    """ The main function
-
-    primes can be written as 6k +/- 1
-    to check wether the number is a prime, we check whether the number
-    is divisible by any prime already in the list.
-
+    """The main function
     """
-    thresh = 2e6
-    k = 1
-    n = -1
-    number = 6 * k + n
-    primes = []
-    sum_ = 2 + 3 + sum(primes)
-    while number < thresh:
-        is_prime = True
-        sq = number**0.5
-        for p in primes:
-            if number % p == 0:
-                is_prime = False
-                break
-            elif sq < p:
-                break
+    print(benchmark(solution))
 
-        if is_prime:
-            primes.append(number)
-            sum_ += number
-
-        if n == -1:
-            n = 1
-        else:
-            n = -1
-            k += 1
-
-        number = 6 * k + n
-
-    print("Sum of primes less than %d: %d" % (thresh, sum_))
 
 if __name__ == "__main__":
-    import time
-    start = time.time()
+    import doctest
+    doctest.testmod()
     main()
-    print("Exec time: %.3f" % (time.time() - start))
