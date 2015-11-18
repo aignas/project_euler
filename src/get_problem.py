@@ -80,14 +80,13 @@ def benchmark(func, *args, **kwargs):
 def solution():
     """The solution to the problem
     """
-    ret = 0
-    print(ret)
+    return 0
 
 
 def main():
     """The main function
     """
-    benchmark(solution)
+    print(benchmark(solution))
 
 
 if __name__ == "__main__":
