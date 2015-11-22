@@ -58,15 +58,32 @@ def benchmark(func, *args, **kwargs):
     return answer
 
 
-def triangle_solution(triangle):
-    """The actual function which does the work
-    """
-    array = [[int(j) for j in i.split()] for i in triangle.strip().split('\n')]
+from math import factorial
 
-    max_ = 0
-    max_solution = []
-    for line in array:
-        for number in line:
+
+def triangle_solution(triangle):
+    """The actual function which does the work by iterating over each
+    possible path.
+
+    The outline of the algorithm:
+
+    1. Start with the bottom of the triangle and find the highest numbers.
+    2. Go to the row above and find the highest sums and replace the
+    nodes with the sum values.
+    3. ...
+    4. Once we reach the top we should arrive at a sum which is the
+    largest if we select the largest sum on our way up.
+
+    """
+    array = [[int(j) for j in i.split()]
+             for i in triangle.strip().split('\n')]
+
+    number_of_possibilities = factorial(len(array[-1]))
+    for i in range(len(array) - 2, -1, -1):
+        for j in range(len(array[i])):
+            array[i][j] += max(array[i+1][j], array[i+1][j+1])
+
+    return array[0][0]
 
 
 def test_solution():
@@ -82,7 +99,7 @@ def test_solution():
     2 4 6
     8 5 9 3
     """
-    return sum(triangle_solution(triangle))
+    return triangle_solution(triangle)
 
 
 def solution():
@@ -105,10 +122,7 @@ def solution():
     63 66 04 68 89 53 67 30 73 16 69 87 40 31
     04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
     """
-
-    ret = 0
-    print(ret)
-    return ret
+    return triangle_solution(triangle)
 
 
 def main():

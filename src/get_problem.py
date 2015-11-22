@@ -91,8 +91,8 @@ def main():
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
-    main()
+    if doctest.testmod()[0] == 0:
+        main()
 '''.format(description=description)
 
     filename = "solution{:03d}.py".format(int(number))

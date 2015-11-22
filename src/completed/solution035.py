@@ -76,8 +76,8 @@ def get_primes(limit):
                 sieve[j] = False
 
     # Now, populate the lists:
-    return ['2'] + [
-        str(2 * i + 1) for i, is_prime in enumerate(sieve) if is_prime]
+    return [2] + [
+        2 * i + 1 for i, is_prime in enumerate(sieve) if is_prime]
 
 
 def solution(limit=10**6):
@@ -91,7 +91,7 @@ def solution(limit=10**6):
     This solves the given problem in about 0.139 seconds, which in my
     opinion is good enough. :)
     """
-    primes = get_primes(limit)
+    primes = [str(i) for i in get_primes(limit)]
 
     ret = 0
 

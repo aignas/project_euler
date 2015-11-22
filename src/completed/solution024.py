@@ -34,19 +34,49 @@ def benchmark(func, *args, **kwargs):
     return answer
 
 
+from math import factorial
+
+
 def solution():
     """The solution to the problem
+
+    The idea here is that the number of permutations is 10! and we need
+    to go only through a subset of them in order to find the millionth
+    one.
+
+    There are 9! permutations with '0' in front. 9! is 362880.
+    There are another 9! permutations with '1', which is another 362880,
+    so our solution must have 2 in front.
+
+    There are 8! with '20' in front and there are:
+    40320
+
+    NOTE: In order to get the correct answer, we need to subtract from our limit 1.
+
     """
-    pass
+    limit = 1000000 - 1
+    digits = list('0123456789')
+    number = ''
+
+    solutions = factorial(len(digits))
+
+    while len(number) < 10:
+        solutions = solutions // len(digits)
+        digit_to_choose = limit // solutions
+        limit = limit % solutions
+        number = number + digits[digit_to_choose]
+        digits.pop(digit_to_choose)
+
+    return int(number)
 
 
 def main():
     """The main function
     """
-    # benchmark(solution)
+    print(benchmark(solution))
 
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
-    main()
+    if doctest.testmod()[0] == 0:
+        main()
